@@ -31,12 +31,8 @@ RUN cd /tmp \
 	&& mv -f ./build /opt/cura/ \
   && rm -Rf /tmp/*
 
-#Create an octoprint user
-RUN useradd -ms /bin/bash octoprint && adduser octoprint dialout
-RUN chown octoprint:octoprint /opt/octoprint
-USER octoprint
 #This fixes issues with the volume command setting wrong permissions
-RUN mkdir /home/octoprint/.octoprint
+RUN mkdir -p /home/octoprint/.octoprint
 
 #Install Octoprint
 RUN git clone --branch $tag https://github.com/foosel/OctoPrint.git /opt/octoprint \
@@ -46,4 +42,4 @@ RUN git clone --branch $tag https://github.com/foosel/OctoPrint.git /opt/octopri
 VOLUME /home/octoprint/.octoprint
 
 
-CMD ["/opt/octoprint/venv/bin/octoprint", "serve"]
+CMD ["/opt/octoprint/venv/bin/octoprint", "serve", "--iknowwhatimdoing"]
